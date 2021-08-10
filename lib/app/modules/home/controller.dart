@@ -12,16 +12,18 @@ class HomeController extends GetxController {
   Stream? broadCastStream;
   @override
   void onInit() {
-    this.channel =
-        WebSocketChannel.connect(Uri.parse('wss://echo.websocket.org/'));
+    this.channel = this.repository.getHeartBeats();
     this.broadCastStream = this.channel!.stream.asBroadcastStream();
-    this.broadCastStream!.listen((event) {});
+    this.broadCastStream!.listen(
+          (event) async {},
+          onDone: () => print('donee'),
+          onError: (e) => print(e.toString()),
+        );
     super.onInit();
   }
 
   TextEditingController textController = TextEditingController(text: '');
   sendMessage() {
-    print(this.textController.text);
     this.textController.text.isEmpty
         ? ScaffoldMessenger.of(Get.context!).showSnackBar(
             SnackBar(content: Text('Insira alguma palavra ou valor')))
@@ -34,8 +36,4 @@ class HomeController extends GetxController {
     this.channel!.sink.close(status.goingAway);
     super.onClose();
   }
-
-  final _obj = ''.obs;
-  set obj(value) => this._obj.value = value;
-  get obj => this._obj.value;
 }

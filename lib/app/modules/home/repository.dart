@@ -4,4 +4,5 @@ class HomeRepository {
   final BlockChain socket;
   HomeRepository(this.socket);
   listenHeartBeats() => this.socket.listenHeartBeats();
+  getHeartBeats() => this.socket.getHeartBeats();
 }

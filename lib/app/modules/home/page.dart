@@ -17,6 +17,7 @@ class HomePage extends GetView<HomeController> {
           StreamBuilder(
             stream: this.controller.broadCastStream,
             builder: (context, snapshot) {
+              print(snapshot.data);
               return Text(
                 snapshot.hasData ? '${snapshot.data}' : '',
                 style: TextStyle(color: Colors.black),
